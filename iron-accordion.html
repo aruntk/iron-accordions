@@ -36,15 +36,20 @@ Example multiple:
 @hero hero.svg
 -->
 
-<dom-module id="iron-accordion">
+<dom-module id="iron-accordion" assetpath="bower_components/iron-accordions/">
   <template>
     <style>
-      :host {
-        display: block;
-        box-sizing: border-box;
-      }
+:host {
+  display: block;
+  box-sizing: border-box;
+  transition: flex 0.3s ease;
+  -webkit-transition: flex 0.3s ease;
+}
       :host.iron-selected{
         @apply(--layout-flex);
+        transition: none;
+        -webkit-transition:none;
+
       }
       #header {
         cursor: pointer;
@@ -54,7 +59,10 @@ Example multiple:
       #content {
         @apply(--layout-flex);
         overflow:hidden;
+      }
+      #content[area-hidden=true]{
         overflow-y:auto;
+
       }
 
     </style>
@@ -68,81 +76,85 @@ Example multiple:
   </template>
 
   <script>
-    Polymer({
-      is: 'iron-accordion',
+Polymer({
+  is: 'iron-accordion',
 
-      properties: {
-        /**
-         * Set opened to true to show the collapse element and to false to hide it.
-         *
-         * @attribute opened
-         */
-        opened: {
-         type: Boolean,
-         value: false,
-         notify: true,
-         reflectToAttribute: true
-        }
-      },
+  properties: {
+    /**
+     * Set opened to true to show the collapse element and to false to hide it.
+     *
+     * @attribute opened
+     */
+    opened: {
+      type: Boolean,
+      value: false,
+      notify: true,
+      reflectToAttribute: true
+    }
+  },
 
-      listeners: {
-        'header.tap': '_onHeaderTap'
-      },
+  listeners: {
+    'header.tap': '_onHeaderTap'
+  },
 
-      // Element Lifecycle
+  // Element Lifecycle
 
-      ready: function() {
-        // `ready` is called after all elements have been configured, but
-        // propagates bottom-up. This element's children are ready, but parents
-        // are not.
-        //
-        // This is the point where you should make modifications to the DOM (when
-        // necessary), or kick off any processes the element wants to perform.
-      },
+  ready: function() {
+    // `ready` is called after all elements have been configured, but
+    // propagates bottom-up. This element's children are ready, but parents
+    // are not.
+    //
+    // This is the point where you should make modifications to the DOM (when
+    // necessary), or kick off any processes the element wants to perform.
+  },
 
-      attached: function() {
-        // `attached` fires once the element and its parents have been inserted
-        // into a document.
-        //
-        // This is a good place to perform any work related to your element's
-        // visual state or active behavior (measuring sizes, beginning animations,
-        // loading resources, etc).
-      },
+  attached: function() {
+    // `attached` fires once the element and its parents have been inserted
+    // into a document.
+    //
+    // This is a good place to perform any work related to your element's
+    // visual state or active behavior (measuring sizes, beginning animations,
+    // loading resources, etc).
+  },
 
-      detached: function() {
-        // The analog to `attached`, `detached` fires when the element has been
-        // removed from a document.
-        //
-        // Use this to clean up anything you did in `attached`.
-      },
+  detached: function() {
+    // The analog to `attached`, `detached` fires when the element has been
+    // removed from a document.
+    //
+    // Use this to clean up anything you did in `attached`.
+  },
 
-      // Element Behavior
+  // Element Behavior
 
-      /**
-       * Listener to #header tap. And fire custom events.
-       */
-      _onHeaderTap: function(e) {
-        this.toggle();
-        this.fire('iron-accordion-header-tap');
-      },
+  /**
+   * Listener to #header tap. And fire custom events.
+   */
+  _onHeaderTap: function(e) {
+    this.toggle();
+    this.fire('iron-accordion-header-tap');
+  },
 
-      /**
-       * Toggle the opened state.
-       *
-       * @method toggle
-       */
-      toggle: function() {
-        this.$.content.toggle();
-      },
+  /**
+   * Toggle the opened state.
+   *
+   * @method toggle
+   */
+  toggle: function() {
+    this.show();
+  },
 
-      show: function() {
-        this.$.content.show();
-      },
+  show: function() {
+    var self = this;
+    setTimeout(function(){
+      self.$.content.show();
 
-      hide: function() {
-        this.$.content.hide();
-      }
+    },300)
+  },
 
-    });
+  hide: function() {
+    this.$.content.hide();
+  }
+
+});
   </script>
 </dom-module>
