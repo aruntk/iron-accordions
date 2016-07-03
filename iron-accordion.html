@@ -43,7 +43,7 @@ Example multiple:
         display: block;
         box-sizing: border-box;
       }
-      :host .iron-selected{
+      :host.iron-selected{
         @apply(--layout-flex);
       }
       #header {
@@ -52,6 +52,7 @@ Example multiple:
       }
 
       #content {
+        @apply(--layout-flex);
         overflow:hidden;
         overflow-y:auto;
       }
